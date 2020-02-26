@@ -1,0 +1,26 @@
+{
+  "name": "manus-viewer",
+  "version": "1.0.0",
+  "description": "Navigate non-deterministic script with optional jumps between scenes.",
+  "main": "index.js",
+  "dependencies": {
+    "cookie-parser": "^1.4.4",
+    "express": "^4.17.1",
+    "express-flash": "0.0.2",
+    "express-handlebars": "^3.1.0",
+    "express-session": "^1.17.0",
+    "nodemon": "^2.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./index.js"
+  },
+  "keywords": [
+    "kulturkrock",
+    "script",
+    "manus"
+  ],
+  "author": "Matz \"Nano\" Larsson",
+  "license": "MIT"
+}
