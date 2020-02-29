@@ -1,0 +1,38 @@
+
+
+
+<input type = "text" id = "item-name" placeholder = "Item name">
+<input type = "button" value = "Add" onclick = "addItem(getItemName());">
+<input type = "button" value = "Remove" onclick = "removeItem(getItemName());">
+
+<div id = "items"></div>
+<div id = "achievements"></div>
+
+
+<script>
+	var socket = io();
+	socket.on('items', reloadItems);
+	socket.on('achievement', announceAchievement);
+	
+	function reloadItems(items){
+		let info = "Items: " + items.join(", ");
+		document.getElementById("items").innerHTML = info;
+	}
+	
+	function announceAchievement(achievement){
+		let info = "Got an achievement!<br>" + achievement.title + " (" + achievement.description + ")<br>";
+		document.getElementById("achievements").innerHTML += info;
+	}
+	
+	function getItemName(){
+		return document.getElementById("item-name").value;
+	}
+	
+	function addItem(itemName){
+		socket.emit('additem', itemName);
+	}
+	
+	function removeItem(itemName){
+		socket.emit('removeitem', itemName);
+	}
+</script>

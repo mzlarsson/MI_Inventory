@@ -1,8 +1,9 @@
-var model = require('./model');
-
 var express = require('express'), http = require('http');
 var app = express();
 var httpServer = http.createServer(app);
+var io = require('socket.io')(httpServer);
+
+var model = require('./model')(io);
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));

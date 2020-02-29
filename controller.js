@@ -5,7 +5,11 @@ module.exports = function(model){
     const router = express.Router();
 	
 	router.get("/", (req, res) => {
-		res.render('main', {'exampleVar': 'some example'});
+		res.render('main', {});
+	});
+	
+	router.get("/update", (req, res) => {
+		res.render('update', {});
 	});
 
 	return router;

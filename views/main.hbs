@@ -1,6 +1,18 @@
 
-{{> header}}
 
-<div>
-	This is the main page, wohoo! Example is {{ exampleVar }}.
-</div>
+
+<script>
+	var socket = io();
+	socket.on('items', reloadItems);
+	socket.on('achievement', announceAchievement);
+	
+	function reloadItems(items){
+		console.log(items);
+	}
+	
+	function announceAchievement(achievement){
+		console.log('Got an achievement!');
+		console.log(achievement.title + ': ' + achievement.description);
+	}
+	
+</script>
