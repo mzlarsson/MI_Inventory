@@ -6,3 +6,36 @@
 body{
 	margin-right:0;
 }
+
+#inventory {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 960px;
+	height: 440px;
+	background:url('/imgs/inventory-background.png');
+}
+#inventory-internal {
+	display:flex;
+	flex-wrap:wrap;
+	padding:50px 100px;
+	width: 100%;
+	height: 100%;
+}
+.inventory-item {
+	width: 100px;
+	height: 100px;
+	margin: 10px 25px;
+	background: url("/imgs/itemborder.png");
+	display:none;
+}
+.inventory-item:nth-child(2n+1){
+	background: url("/imgs/itemborder2.png");
+}
+.inventory-item-icon {
+	width:100px;
+	height:100px;
+	background-size:80px;
+	background-position:center;
+	background-repeat:no-repeat;
+}

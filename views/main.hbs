@@ -1,5 +1,23 @@
 
-
+<div id = "inventory">
+	<div id = "inventory-internal">
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+	</div>
+</div>
 
 <script>
 	var socket = io();
@@ -7,7 +25,23 @@
 	socket.on('achievement', announceAchievement);
 	
 	function reloadItems(items){
-		console.log(items);
+		let allItems = document.getElementsByClassName("inventory-item");
+		
+		// Hide all unused item rows
+		let itemMaxIndex = (Math.floor(items.length/5)+1)*5;
+		for (let i = 0; i<allItems.length; i++){
+			allItems[i].style.display = i < itemMaxIndex ? "block" : "none";
+		}
+		
+		// Populate with icons
+		for (let i = 0; i<allItems.length; i++) {
+			let url = "";
+			if (i < items.length){
+				url = "url('/imgs/" + items[i] + ".png')";
+			}
+			
+			allItems[i].firstChild.style.backgroundImage = url;
+		}
 	}
 	
 	function announceAchievement(achievement){
