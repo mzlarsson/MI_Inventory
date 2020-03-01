@@ -39,6 +39,7 @@
 	socket.on('items', reloadItems);
 	socket.on('achievement', announceAchievement);
 	socket.on('money', updateMoney);
+	socket.on('visible', setVisibility);
 	
 	function getNumberOfVisibleSlots(nbrOfItems){
 		if (nbrOfItems < 5) return 10;
@@ -76,6 +77,10 @@
 	
 	function updateMoney(amount){
 		document.getElementById('inventory-gold-amount').innerHTML = amount;
+	}
+	
+	function setVisibility(visible){
+		document.getElementById("inventory").style.display = visible ? "block" : "none";
 	}
 	
 	function announceAchievement(achievement){

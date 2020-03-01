@@ -4,6 +4,9 @@
 	-webkit-box-sizing: border-box;
 	color:#a51d1a;
 }
+::-webkit-scrollbar {
+    display: none;
+}
 body{
 	margin-right:0;
 }

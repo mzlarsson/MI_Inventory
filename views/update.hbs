@@ -9,6 +9,10 @@
 <br><br>
 <input type = "text" id = "gold-amount" placeholder = "Amount">
 <input type = "button" value = "Change gold" onclick = "changeGold(parseInt(document.getElementById('gold-amount').value));">
+<br><br>
+<input type = "button" value = "Hide" onclick = "setVisible(false);">
+<input type = "button" value = "Show" onclick = "setVisible(true);">
+
 
 <h3>Fancy edit</h3>
 <div class = "item-area">
@@ -72,6 +76,10 @@
 	
 	function changeGold(amount){
 		socket.emit('changemoney', amount);
+	}
+	
+	function setVisible(visible){
+		socket.emit('setvisible', visible);
 	}
 	
 	function getItemName(){

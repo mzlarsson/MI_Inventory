@@ -2,6 +2,7 @@
 module.exports = function(io){
 	
 	var model = {};
+	model.visibility = true;
 	model.money = 3;
 	model.items = [];
 	model.achievementsLeft = [
@@ -29,6 +30,11 @@ module.exports = function(io){
 	model.changeMoney = function(amount){
 		model.money += amount;
 		model.notifyMoney();
+	};
+	
+	model.setVisible = function(visible){
+		model.visibility = visible;
+		model.notifyVisibility();
 	};
 	
 	model.checkAchievements = function(){
@@ -61,14 +67,20 @@ module.exports = function(io){
 		io.emit('money', model.money);
 	};
 	
+	model.notifyVisibility = function(){
+		io.emit('visible', model.visibility);
+	};
+	
 	io.on('connection', function(socket){
 		console.log('Client connected');
 		socket.emit('items', model.items);
 		socket.emit('money', model.money);
+		socket.emit('visible', model.visibility);
 	
 		socket.on('additem', model.addItem);
 		socket.on('removeitem', model.removeItem);
 		socket.on('changemoney', model.changeMoney);
+		socket.on('setvisible', model.setVisible);
 	});
 	
 	return model;
