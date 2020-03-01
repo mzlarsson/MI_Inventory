@@ -1,0 +1,18 @@
+{
+  "name": "transparent_web",
+  "version": "1.0.0",
+  "description": "Show web page with transparent background",
+  "main": "main.js",
+  "scripts": {
+	"start": "electron ."
+  },
+  "keywords": [
+    "transparent",
+    "web"
+  ],
+  "author": "Matz Larsson",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^8.0.2"
+  }
+}
