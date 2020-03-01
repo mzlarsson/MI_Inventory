@@ -109,7 +109,7 @@ body{
 	height:25px;
 	text-align:center;
 	font-variant:small-caps;
-	background:#a51d1a80;
+	background:#a51d1a;
 	color:white;
 }
 .available-item-name{
@@ -120,7 +120,7 @@ body{
 }
 .available-item-controls{
 	display:flex;
-	border-top: 1px solid #a51d1a;
+	border-top: 1px solid white;
 }
 .available-item-add, .available-item-remove{
 	vertical-align:center;
@@ -130,10 +130,10 @@ body{
 	color:white;
 }
 .available-item-remove{
-	border-right:1px solid #a51d1a;
+	border-right:1px solid white;
 }
 .available-item-add:hover, .available-item-remove:hover{
-	background-color:#a51d1a80;
+	opacity:0.6;
 	cursor:hand;
 	cursor:pointer;
 }
