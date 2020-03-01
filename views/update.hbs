@@ -1,12 +1,29 @@
 
-
-
-<input type = "text" id = "item-name" placeholder = "Item name">
-<input type = "button" value = "Add" onclick = "addItem(getItemName());">
-<input type = "button" value = "Remove" onclick = "removeItem(getItemName());">
-
 <div id = "items"></div>
 <div id = "achievements"></div>
+
+<h3>Manual edit</h3>
+<input type = "text" id = "item-name" placeholder = "Item name">
+<input type = "button" value = "Add" onclick = "addItemManually(getItemName());">
+<input type = "button" value = "Remove" onclick = "removeItemManually(getItemName());">
+<br><br>
+<input type = "text" id = "gold-amount" placeholder = "Amount">
+<input type = "button" value = "Change gold" onclick = "changeGold(parseInt(document.getElementById('gold-amount').value));">
+
+<h3>Fancy edit</h3>
+<div class = "item-area">
+	{{#each availableItems as |item index|}}
+		<div class = "available-item">
+			<div class = "available-item-icon {{ternary item.added ' added' ''}}" style = "background-image: url('/imgs/{{ item.name }}.png');" onclick = "toggleItem(this, '{{ item.name }}', {{ item.cost }});"></div>
+			<div class = "available-item-name">{{ item.description }}</div>
+			<div class = "available-item-cost">{{ item.cost }} guld</div>
+			<div class = "available-item-controls">
+				<div class = "available-item-remove" onclick = "removeItem(this, '{{ item.name }}', {{ item.cost }});">REM</div>
+				<div class = "available-item-add" onclick = "addItem(this, '{{ item.name }}', {{ item.cost }});">ADD</div>
+			</div>
+		</div>
+	{{/each}}
+</div>
 
 
 <script>
@@ -24,15 +41,48 @@
 		document.getElementById("achievements").innerHTML += info;
 	}
 	
+	function toggleItem(itemElement, name, cost){
+		let add = !itemElement.className.includes("added");
+		
+		if (add){
+			socket.emit('additem', name);
+			socket.emit('changemoney', -cost);
+			itemElement.className += " added";
+		} else {
+			socket.emit('removeitem', name);
+			socket.emit('changemoney', cost);
+			itemElement.className = itemElement.className.replace(" added", "");
+		}
+	}
+	
+	function addItem(itemElement, name, cost){
+		socket.emit('additem', name);
+		socket.emit('changemoney', -cost);
+		
+		if (!itemElement.className.includes("added")) {
+			itemElement.className += " added";
+		}
+	}
+	
+	function removeItem(itemElement, name, cost){
+		socket.emit('removeitem', name);
+		socket.emit('changemoney', cost);
+		itemElement.className = itemElement.className.replace(" added", "");
+	}
+	
+	function changeGold(amount){
+		socket.emit('changemoney', amount);
+	}
+	
 	function getItemName(){
 		return document.getElementById("item-name").value;
 	}
 	
-	function addItem(itemName){
+	function addItemManually(itemName){
 		socket.emit('additem', itemName);
 	}
 	
-	function removeItem(itemName){
+	function removeItemManually(itemName){
 		socket.emit('removeitem', itemName);
 	}
 </script>

@@ -1,6 +1,21 @@
 
 <div id = "inventory">
+	<div class = "inventory-header">Inventarium</div>
+	<div class = "inventory-gold"><span id = "inventory-gold-amount">5</span></div>
 	<div id = "inventory-internal">
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
 		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
 		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
 		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
@@ -23,12 +38,21 @@
 	var socket = io();
 	socket.on('items', reloadItems);
 	socket.on('achievement', announceAchievement);
+	socket.on('money', updateMoney);
+	
+	function getNumberOfVisibleSlots(nbrOfItems){
+		if (nbrOfItems < 5) return 10;
+		else if (nbrOfItems < 10) return 10;
+		else if (nbrOfItems < 15) return 15;
+		else if (nbrOfItems < 24) return 24;
+		else return 28;
+	}
 	
 	function reloadItems(items){
 		let allItems = document.getElementsByClassName("inventory-item");
 		
 		// Hide all unused item rows
-		let itemMaxIndex = (Math.floor(items.length/5)+1)*5;
+		let itemMaxIndex = getNumberOfVisibleSlots(items.length);
 		for (let i = 0; i<allItems.length; i++){
 			allItems[i].style.display = i < itemMaxIndex ? "block" : "none";
 		}
@@ -42,6 +66,16 @@
 			
 			allItems[i].firstChild.style.backgroundImage = url;
 		}
+		
+		// Ugly hack to allow many items, didnt wanna fight with flexbox.
+		let className = "";
+		if (items.length >= 24) className = "superlarge";
+		else if (items.length > 14) className = "large";
+		document.getElementById("inventory-internal").className = className;
+	}
+	
+	function updateMoney(amount){
+		document.getElementById('inventory-gold-amount').innerHTML = amount;
 	}
 	
 	function announceAchievement(achievement){
