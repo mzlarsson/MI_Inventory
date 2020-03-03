@@ -1,4 +1,5 @@
 
+<div><span id = "money"></span> guld</div>
 <div id = "items"></div>
 <div id = "achievements"></div>
 
@@ -33,11 +34,16 @@
 <script>
 	var socket = io();
 	socket.on('items', reloadItems);
+	socket.on('money', updateMoney);
 	socket.on('achievement', announceAchievement);
 	
 	function reloadItems(items){
 		let info = "Items: " + items.join(", ");
 		document.getElementById("items").innerHTML = info;
+	}
+	
+	function updateMoney(money){
+		document.getElementById("money").innerHTML = money;
 	}
 	
 	function announceAchievement(achievement){

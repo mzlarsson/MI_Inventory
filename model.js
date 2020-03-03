@@ -51,7 +51,45 @@ module.exports = function(io){
 
 	model.getAllAvailableItems = function(){
 		return [
-			createItem(1, "meddelande", "Meddelande", model.items)
+			createItem(0, "avgudastaty", "Avgudastaty", model.items),
+			createItem(0, "blomma", "Blomma", model.items),
+			createItem(1, "ros", "Ros", model.items),
+			createItem(0, "citron", "Citron", model.items),
+			createItem(0, "devils_root", "Djävulsrot", model.items),
+			createItem(0, "featherpen", "Fjäderpenna", model.items),
+			createItem(0, "fil", "Fil", model.items),
+			createItem(0, "flaska", "Flaska", model.items),
+			createItem(0, "flaskpost", "Flaskpost", model.items),
+			createItem(0, "forstoringsglas", "Förstoringsglas", model.items),
+			createItem(3, "grogg", "Grogg", model.items),
+			createItem(0, "gummikyckling", "Gummikyckling", model.items),
+			createItem(0, "guvernorsbalte", "Guvernörsbälte", model.items),
+			createItem(0, "hatt", "Hatt", model.items),
+			createItem(0, "kniv", "Kniv", model.items),
+			createItem(0, "kompass", "Kompass", model.items),
+			createItem(0, "kors", "Kors", model.items),
+			createItem(0, "kulor", "Kulor", model.items),
+			createItem(0, "map_part1", "Karta del 1", model.items),
+			createItem(0, "map_part2", "Karta del 2", model.items),
+			createItem(1, "meddelande", "Meddelande", model.items),
+			createItem(0, "notes", "Anteckningar", model.items),
+			createItem(0, "pinnar", "Pinnar", model.items),
+			createItem(0, "pistol", "Pistol", model.items),
+			createItem(0, "planka", "Planka", model.items),
+			createItem(0, "recept", "Recept", model.items),
+			createItem(1, "rep", "Rep (203m)", model.items),
+			createItem(0, "ritualdolk", "Ritualdolk", model.items),
+			createItem(0, "romflaska", "Romflaska", model.items),
+			createItem(0, "skattkista", "Skattkista", model.items),
+			createItem(0, "skelettben", "Skelettben", model.items),
+			createItem(0, "skiffernyckel", "Skiffernyckel", model.items),
+			createItem(0, "skull", "Dödskalle", model.items),
+			createItem(0, "spade", "Spade", model.items),
+			createItem(0, "surstromming", "Surströmming", model.items),
+			createItem(0, "tarta", "Tårta", model.items),
+			createItem(0, "tshirt", "T-shirt", model.items),
+			createItem(0, "varja", "Värja", model.items),
+			createItem(0, "ved", "Ved", model.items)
 		];
 	};
 	
