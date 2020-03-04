@@ -1,9 +1,8 @@
 
 <div id = "inventory">
 	<div class = "inventory-header">Inventarium</div>
-	<div class = "inventory-gold"><span id = "inventory-gold-amount">5</span></div>
 	<div id = "inventory-internal">
-		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"><div id = "inventory-gold-amount">5</div></div></div>
 		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
 		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
 		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
@@ -42,10 +41,10 @@
 	socket.on('visible', setVisibility);
 	
 	function getNumberOfVisibleSlots(nbrOfItems){
-		if (nbrOfItems < 5) return 10;
-		else if (nbrOfItems < 10) return 10;
-		else if (nbrOfItems < 15) return 15;
-		else if (nbrOfItems < 24) return 24;
+		if (nbrOfItems < 4) return 10;
+		else if (nbrOfItems < 9) return 10;
+		else if (nbrOfItems < 14) return 15;
+		else if (nbrOfItems < 23) return 24;
 		else return 28;
 	}
 	
@@ -59,19 +58,19 @@
 		}
 		
 		// Populate with icons
-		for (let i = 0; i<allItems.length; i++) {
+		for (let i = 0; i<allItems.length-1; i++) {
 			let url = "";
 			if (i < items.length){
 				url = "url('/imgs/" + items[i] + ".png')";
 			}
 			
-			allItems[i].firstChild.style.backgroundImage = url;
+			allItems[i+1].firstChild.style.backgroundImage = url;
 		}
 		
 		// Ugly hack to allow many items, didnt wanna fight with flexbox.
 		let className = "";
-		if (items.length >= 24) className = "superlarge";
-		else if (items.length > 14) className = "large";
+		if (items.length >= 23) className = "superlarge";
+		else if (items.length > 13) className = "large";
 		document.getElementById("inventory-internal").className = className;
 	}
 	
