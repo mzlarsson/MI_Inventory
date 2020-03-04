@@ -1,18 +1,22 @@
 
-<div><span id = "money"></span> guld</div>
-<div id = "items"></div>
-<div id = "achievements"></div>
+<div class = "status-area">
+	<div id = "achievements"><b>Achievements:</b> </div>
+	<div id = "items"></div>
+	<div><span id = "money"></span> guld</div>
+</div>
 
-<h3>Manual edit</h3>
-<input type = "text" id = "item-name" placeholder = "Item name">
-<input type = "button" value = "Add" onclick = "addItemManually(getItemName());">
-<input type = "button" value = "Remove" onclick = "removeItemManually(getItemName());">
-<br><br>
-<input type = "text" id = "gold-amount" placeholder = "Amount">
-<input type = "button" value = "Change gold" onclick = "changeGold(parseInt(document.getElementById('gold-amount').value));">
-<br><br>
-<input type = "button" value = "Hide" onclick = "setVisible(false);">
-<input type = "button" value = "Show" onclick = "setVisible(true);">
+<div class = "controls-area">
+	<h3>Manual edit</h3>
+	<input type = "text" id = "item-name" placeholder = "Item name">
+	<input type = "button" value = "Add" onclick = "addItemManually(getItemName());">
+	<input type = "button" value = "Remove" onclick = "removeItemManually(getItemName());">
+	<br><br>
+	<input type = "text" id = "gold-amount" placeholder = "Amount" onkeyup = "enableGoldButton(event);">
+	<input type = "button" id = "gold-button" value = "Change gold" onclick = "fixGoldChange();" disabled>
+	<br><br>
+	<input id = "hide-button" type = "button" value = "Hide" onclick = "setVisible(false);">
+	<input id = "show-button" type = "button" value = "Show" onclick = "setVisible(true);">
+</div>
 
 
 <h3>Fancy edit</h3>
@@ -36,9 +40,10 @@
 	socket.on('items', reloadItems);
 	socket.on('money', updateMoney);
 	socket.on('achievement', announceAchievement);
+	socket.on('visible', updateVisibility);
 	
 	function reloadItems(items){
-		let info = "Items: " + items.join(", ");
+		let info = "<b>Items:</b> " + items.join(", ");
 		document.getElementById("items").innerHTML = info;
 	}
 	
@@ -46,8 +51,18 @@
 		document.getElementById("money").innerHTML = money;
 	}
 	
+	function updateVisibility(visible){
+		if (visible){
+			document.getElementById("hide-button").removeAttribute("disabled");
+			document.getElementById("show-button").setAttribute("disabled", "true");
+		}else{
+			document.getElementById("hide-button").setAttribute("disabled", "true");
+			document.getElementById("show-button").removeAttribute("disabled");
+		}
+	}
+	
 	function announceAchievement(achievement){
-		let info = "Got an achievement!<br>" + achievement.title + " (" + achievement.description + ")<br>";
+		let info = achievement.title + ", ";
 		document.getElementById("achievements").innerHTML += info;
 	}
 	
@@ -98,5 +113,28 @@
 	
 	function removeItemManually(itemName){
 		socket.emit('removeitem', itemName);
+	}
+	
+	function fixGoldChange(){
+		var tf = document.getElementById('gold-amount');
+		var butt = document.getElementById('gold-button');
+		changeGold(parseInt(tf.value));
+		tf.value = "";
+		butt.setAttribute('disabled', 'true');
+	}
+	
+	function enableGoldButton(e){
+		if (e.keyCode == 13){
+			fixGoldChange();
+			return;
+		}
+		
+		var tf = document.getElementById('gold-amount');
+		var butt = document.getElementById('gold-button');
+		if (tf.value.length > 0){
+			butt.removeAttribute('disabled');
+		}else {
+			butt.setAttribute('disabled', 'true');
+		}
 	}
 </script>
