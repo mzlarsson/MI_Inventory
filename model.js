@@ -41,10 +41,19 @@ module.exports = function(io){
 		for (let i = 0; i<model.achievementsLeft.length; i++) {
 			let achievement = model.achievementsLeft[i];
 			if (achievement.validator()){
+				model.requestValidateAchievement(achievement);
+			}
+		}
+	};
+	
+	model.activateAchievement = function(name){
+		for (let i = 0; i<model.achievementsLeft.length; i++) {
+			let achievement = model.achievementsLeft[i];
+			if (achievement.name == name){
 				model.achievementsDone.push(achievement);
 				model.notifyAchievement(achievement);
 				model.achievementsLeft.splice(i, 1);
-				i--;
+				break;
 			}
 		}
 	};
@@ -96,8 +105,16 @@ module.exports = function(io){
 		];
 	};
 	
+	model.getAllAvailableAchievements = function(){
+		return model.achievementsLeft.map(x => ({'name': x.name, 'title': x.title, 'description': x.description}));
+	};
+	
 	model.notifyItemList = function(){
 		io.emit('items', model.items);
+	};
+	
+	model.requestValidateAchievement = function(achievement){
+		io.emit('validateachievement', {'name': achievement.name, 'title': achievement.title, 'description': achievement.description});
 	};
 	
 	model.notifyAchievement = function(achievement){
@@ -117,11 +134,13 @@ module.exports = function(io){
 		socket.emit('items', model.items);
 		socket.emit('money', model.money);
 		socket.emit('visible', model.visibility);
+		socket.emit('achievements', model.achievementsDone);
 	
 		socket.on('additem', model.addItem);
 		socket.on('removeitem', model.removeItem);
 		socket.on('changemoney', model.changeMoney);
 		socket.on('setvisible', model.setVisible);
+		socket.on('activateachievement', model.activateAchievement);
 	});
 	
 	return model;

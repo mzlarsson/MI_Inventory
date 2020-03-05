@@ -16,15 +16,15 @@ body{
 	top: 0px;
 	left: 0px;
 	width: 960px;
-	height: 440px;
-	background:url('/imgs/inventory-background.png');
+	height: 720px;
+	background:url('/imgs/inventory-background.jpg');
 }
 .inventory-header{
-	font-size:24px;
+	font-size:32px;
 	font-variant:small-caps;
 	text-align:center;
-	margin-top:6px;
-	margin-bottom:4px;
+	margin-top:10px;
+	margin-bottom:10px;
 }
 #inventory-gold-amount{
 	margin-top:12px;
@@ -36,14 +36,14 @@ body{
 	display:flex;
 	flex-wrap:wrap;
 	justify-content:space-between;
-	padding:0px 100px 30px 100px;
+	padding:0px 70px 30px 70px;
 	width: 100%;
 	height: 100%;
 }
 .inventory-item {
 	display:none;
-	width: 115px;
-	height: 115px;
+	width: 130px;
+	height: 130px;
 	margin: 2px 17px;
 	background-image: url("/imgs/itemborder.png");
 	background-repeat:no-repeat;
@@ -67,8 +67,8 @@ body{
 }
 
 #inventory-internal.large .inventory-item {
-	width: 86px;
-	height: 86px;
+	width: 110px;
+	height: 110px;
 	margin: 2px 12px;
 }
 
@@ -84,16 +84,64 @@ body{
 }
 
 
+#achievements{
+	position:absolute;
+	top: 100px;
+	left: 975px;
+	width: 400px;
+	height:120px;
+}
+.achievement{
+	display:none; /*flex*/
+	width:100%;
+	padding: 10px;
+	margin-bottom:4px;
+	border: 1px solid #a51d1a;
+	border-radius:8px;
+	background-color:#fcecdc;
+	opacity:0;
+}
+.achievement-icon{
+	width:120px;
+	height:120px;
+}
+.achievement-info{
+	padding: 5px 0px 5px 10px;
+}
+.achievement-info *{
+	font-variant:small-caps;
+}
+.achievement-header{
+	font-size:32px;
+	font-variant:small-caps;
+	font-weight:bold;
+	margin-bottom:10px;
+}
+.achievement-name{
+	font-size:26px;
+}
+.achievement-desc{
+	font-size:20px;
+}
+.achievement.visible{
+	position:relative;
+	animation-name:achievement;
+	animation-duration:10s;
+}
+@keyframes achievement{
+	0% {top:400px;left:0px;opacity:0;}
+	10% {top:400px;left:0px;opacity:1;}
+	40% {top:0px;left:0px;opacity:1;}
+	80% {top:0px;left:0px;opacity:1;}
+	100% {top:0px;left:0px;opacity:0;}
+}
+
 /* ----------------- UPDATE PAGE ------------------ */
 h3{
 	margin:5px 5px 5px 2px;
 }
-.status-area{
+.status-area, .controls-area, .controls-area-items, .controls-area-achievements{
 	width: 50%;
-	float:left;
-}
-.controls-area{
-	width:50%;
 	float:left;
 }
 .item-area{
@@ -168,4 +216,21 @@ h3{
 	opacity:0.6;
 	cursor:hand;
 	cursor:pointer;
+}
+
+#achievement-manual-update{
+	margin-bottom:12px;
+}
+#achievement-validate{
+	display:none;
+	width:90%;
+	padding:4px;
+	border:1px solid #a51d1a;
+}
+#achievement-validate-name{
+	font-weight:bold;
+}
+#achievement-validate-description{
+	font-size:0.8em;
+	margin-bottom:5px;
 }

@@ -9,7 +9,7 @@ module.exports = function(model){
 	});
 	
 	router.get("/update", (req, res) => {
-		res.render('update', {'availableItems': model.getAllAvailableItems()});
+		res.render('update', {'availableItems': model.getAllAvailableItems(), 'achievementsLeft': model.getAllAvailableAchievements()});
 	});
 
 	return router;

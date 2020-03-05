@@ -1,21 +1,42 @@
 
 <div class = "status-area">
-	<div id = "achievements"><b>Achievements:</b> </div>
+	<div id = "achievements_list"><b>Achievements:</b> </div>
 	<div id = "items"></div>
 	<div><span id = "money"></span> guld</div>
 </div>
 
 <div class = "controls-area">
 	<h3>Manual edit</h3>
-	<input type = "text" id = "item-name" placeholder = "Item name">
-	<input type = "button" value = "Add" onclick = "addItemManually(getItemName());">
-	<input type = "button" value = "Remove" onclick = "removeItemManually(getItemName());">
-	<br><br>
-	<input type = "text" id = "gold-amount" placeholder = "Amount" onkeyup = "enableGoldButton(event);">
-	<input type = "button" id = "gold-button" value = "Change gold" onclick = "fixGoldChange();" disabled>
-	<br><br>
-	<input id = "hide-button" type = "button" value = "Hide" onclick = "setVisible(false);">
-	<input id = "show-button" type = "button" value = "Show" onclick = "setVisible(true);">
+	<div class = "controls-area-items">
+		<input type = "text" id = "item-name" placeholder = "Item name">
+		<input type = "button" value = "Add" onclick = "addItemManually(getItemName());">
+		<input type = "button" value = "Remove" onclick = "removeItemManually(getItemName());">
+		<br><br>
+		<input type = "text" id = "gold-amount" placeholder = "Amount" onkeyup = "enableGoldButton(event);">
+		<input type = "button" id = "gold-button" value = "Change gold" onclick = "fixGoldChange();" disabled>
+		<br><br>
+		<input id = "hide-button" type = "button" value = "Hide" onclick = "setVisible(false);">
+		<input id = "show-button" type = "button" value = "Show" onclick = "setVisible(true);">
+	</div>
+	<div class = "controls-area-achievements">
+		<div id = "achievement-manual-update">
+			<select id = "achievement-select">
+				<option value = "" selected disabled>Välj achievement</option>
+				{{#each achievementsLeft as |achievement index|}}
+					<option value = "{{ achievement.name }}">{{ achievement.title }}</option>
+				{{/each}}
+			</select>
+			<input type = "button" value = "Activate" onclick = "activateAchievementFromSelect();">
+		</div>
+		
+		<div id = "achievement-validate">
+			New achievement detected!
+			<input type = "hidden" id = "achievement-validate-codename"/>
+			<div id = "achievement-validate-name">Name</div>
+			<div id = "achievement-validate-description">Description</div>
+			<input id = "achievement-validate-button" type = "button" value = "Activate" onclick = "activateAchievementFromValidator();" disabled>
+		</div>
+	</div>
 </div>
 
 
@@ -23,7 +44,7 @@
 <div class = "item-area">
 	{{#each availableItems as |item index|}}
 		<div class = "available-item">
-			<div class = "available-item-icon {{ternary item.added ' added' ''}}" style = "background-image: url('/imgs/{{ item.name }}.png');" onclick = "toggleItem(this, '{{ item.name }}', {{ item.cost }});"></div>
+			<div class = "available-item-icon {{ternary item.added ' added' ''}}" style = "background-image: url('/imgs/items/{{ item.name }}.png');" onclick = "toggleItem(this, '{{ item.name }}', {{ item.cost }});"></div>
 			<div class = "available-item-name">{{ item.description }}</div>
 			<div class = "available-item-cost">{{ item.cost }} guld</div>
 			<div class = "available-item-controls">
@@ -39,7 +60,9 @@
 	var socket = io();
 	socket.on('items', reloadItems);
 	socket.on('money', updateMoney);
+	socket.on('validateachievement', validateAchievement);
 	socket.on('achievement', announceAchievement);
+	socket.on('achievements', loadDoneAchievements);
 	socket.on('visible', updateVisibility);
 	
 	function reloadItems(items){
@@ -61,9 +84,35 @@
 		}
 	}
 	
+	function validateAchievement(achievement){
+		document.getElementById("achievement-validate-codename").value = achievement.name;
+		document.getElementById("achievement-validate-name").innerHTML = achievement.title;
+		document.getElementById("achievement-validate-description").innerHTML = achievement.description;
+		document.getElementById("achievement-validate-button").removeAttribute("disabled");
+		document.getElementById("achievement-validate").style.display = "block";
+	}
+	
+	function loadDoneAchievements(achievements){
+		for (let i = 0; i<achievements.length; i++){
+			announceAchievement(achievements[i]);
+		}
+	}
+	
+	function activateAchievementFromSelect(){
+		var sel = document.getElementById("achievement-select");
+		activateAchievement(sel.options[sel.selectedIndex].value);
+	}
+	
+	function activateAchievementFromValidator(){
+		var codename = document.getElementById("achievement-validate-codename").value;
+		activateAchievement(codename);
+		document.getElementById("achievement-validate-button").setAttribute("disabled", "true");
+		document.getElementById("achievement-validate").style.display = "none";
+	}
+	
 	function announceAchievement(achievement){
 		let info = achievement.title + ", ";
-		document.getElementById("achievements").innerHTML += info;
+		document.getElementById("achievements_list").innerHTML += info;
 	}
 	
 	function toggleItem(itemElement, name, cost){
@@ -113,6 +162,10 @@
 	
 	function removeItemManually(itemName){
 		socket.emit('removeitem', itemName);
+	}
+	
+	function activateAchievement(achievementCodename){
+		socket.emit('activateachievement', achievementCodename);
 	}
 	
 	function fixGoldChange(){

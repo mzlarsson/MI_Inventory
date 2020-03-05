@@ -3,16 +3,16 @@ const {app, screen, BrowserWindow} = require('electron')
 function createWindow () {
 	// Create the browser window.
 	mainWindow = new BrowserWindow({
-		width: 960,
-		height: 440, 
+		width: 1400,
+		height: 720, 
 		transparent: true,
 		frame:false
 	})
 
 	let displays = screen.getAllDisplays();
 	if (displays.length >= 2){
-		let x = displays[0].bounds.width + displays[1].bounds.width/2 - mainWindow.getSize()[0]/2;
-		let y = displays[1].bounds.height/2 - mainWindow.getSize()[1]/2;
+		let x = displays[0].bounds.width + displays[1].bounds.width/2 - 960/2;
+		let y = 100;
 		mainWindow.setPosition(x, y);
 	}
 	

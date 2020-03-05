@@ -30,6 +30,26 @@
 		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
 		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
 		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+		<div class = "inventory-item"><div class = "inventory-item-icon"></div></div>
+	</div>
+</div>
+
+<div id = "achievements">
+</div>
+
+<!-- Only used for templating -->
+<div class = "achievement">
+	<img class = "achievement-icon" src = "/imgs/achievements/twoflowers.jpg">
+	<div class = "achievement-info">
+		<div class = "achievement-header">Bedrift upplåst!</div>
+		<div class = "achievement-name">Röda och vita rosen</div>
+		<div class = "achievement-desc">Ha två blommor</div>
 	</div>
 </div>
 
@@ -41,11 +61,11 @@
 	socket.on('visible', setVisibility);
 	
 	function getNumberOfVisibleSlots(nbrOfItems){
-		if (nbrOfItems < 4) return 10;
-		else if (nbrOfItems < 9) return 10;
+		if (nbrOfItems < 4) return 15;
+		else if (nbrOfItems < 9) return 15;
 		else if (nbrOfItems < 14) return 15;
 		else if (nbrOfItems < 23) return 24;
-		else return 28;
+		else return 35;
 	}
 	
 	function reloadItems(items){
@@ -61,7 +81,7 @@
 		for (let i = 0; i<allItems.length-1; i++) {
 			let url = "";
 			if (i < items.length){
-				url = "url('/imgs/" + items[i] + ".png')";
+				url = "url('/imgs/items/" + items[i] + ".png')";
 			}
 			
 			allItems[i+1].firstChild.style.backgroundImage = url;
@@ -85,6 +105,27 @@
 	function announceAchievement(achievement){
 		console.log('Got an achievement!');
 		console.log(achievement.title + ': ' + achievement.description);
+		let achievementNode = document.getElementsByClassName("achievement")[0].cloneNode(true);
+		achievementNode.getElementsByClassName("achievement-icon")[0].setAttribute("src", "/imgs/achievements/" + achievement.name + ".jpg");
+		achievementNode.getElementsByClassName("achievement-name")[0].innerHTML = achievement.title;
+		achievementNode.getElementsByClassName("achievement-desc")[0].innerHTML = achievement.description;
+		achievementNode.style.display = "flex";
+		
+		let container = document.getElementById("achievements");
+		container.appendChild(achievementNode);
+		achievementNode.className += " visible";
+		setTimeout(function(){ container.removeChild(achievementNode); }, 10000);
 	}
+	
+	/*
+	
+	<div class = "achievement">
+		<img class = "achievement-icon" src = "/imgs/achievements/twoflowers.jpg">
+		<div class = "achievement-info">
+			<div class = "achievement-header">Bedrift upplåst!</div>
+			<div class = "achievement-name">Röda och vita rosen</div>
+			<div class = "achievement-desc">Ha två blommor</div>
+		</div>
+	*/
 	
 </script>

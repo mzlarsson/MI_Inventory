@@ -80,7 +80,7 @@ def main():
 	files = [f for f in listdir(path) if isfile(join(path, f)) and f.endswith('.png')]
 	for file in files:
 		try:
-			convert_file(join(path, file), join("..", file))
+			convert_file(join(path, file), join("..", "items", file))
 		except Exception as e:
 			print(e)
 
