@@ -93,9 +93,8 @@
 	}
 	
 	function loadDoneAchievements(achievements){
-		for (let i = 0; i<achievements.length; i++){
-			announceAchievement(achievements[i]);
-		}
+		let info = "<b>Achievements:</b> " + achievements.map(x => x.title).join(", ");
+		document.getElementById("achievements_list").innerHTML = info;
 	}
 	
 	function activateAchievementFromSelect(){
