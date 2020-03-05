@@ -6,8 +6,21 @@ module.exports = function(io){
 	model.money = 3;
 	model.items = [];
 	model.achievementsLeft = [
-		createAchievement("twoflowers", "Röda och vita rosen", "Ha två blommor", () => count(model.items, "ros") == 2)
-		/* TODO: Add more achievements */
+		createAchievement("spirit_guidance", "En röst i mörkret", "Ta råd från andarna", () => false),
+		createAchievement("lechuck_ghost", "Who you gonna call?", "Besegra spökpiraten LeChuck", () => false),
+		createAchievement("lechuck_zombie", "En pistol med en kula", "Besegra zombie-piraten LeChuck", () => false),
+		createAchievement("lechuck_demon", "Pang - kniv i ryggen", "Besegra demon-piraten LeChuck", () => false),
+		createAchievement("lechuck_final", "Kärlekens kraft", "Besegra LeChuck", () => false),
+		createAchievement("flaskpost", "Undrar vem den är till?", "Hitta en flaskpost", () => count(model.items, "flaskpost") >= 1),
+		createAchievement("devils_root", "Roten till allt ont", "Använd en riktig djävulsrot till receptet", () => false),
+		createAchievement("twoflowers", "Röda och vita rosen", "Ha två blommor", () => count(model.items, "ros") + count(model.items, "blomma") == 2),
+		createAchievement("threeflowers", "Rosornas krig", "Ha tre blommor", () => count(model.items, "ros") + count(model.items, "blomma") == 3),
+		createAchievement("twoswords", "Dual-wield", "Ha två svärd", () => count(model.items, "varja") == 2),
+		createAchievement("lechucks_sword", "Svärd och svartkonst", "Fäktas mot Carla med LeChucks svärd", () => false),
+		createAchievement("rip", "R.I.P", "Ge öns fäktmästare en värdig begravning", () => false),
+		createAchievement("sell_to_stan", "Hederlig affärsman", "Sälj något till Stan", () => false),
+		createAchievement("kvitto", "Jag ska bli revisor!", "Uppvisa kvitto på köp", () => false),
+		createAchievement("unknown", "Tekniska problem", "Vi kan ha hittat en bugg", () => false)
 	];
 	model.achievementsDone = [];
 	
