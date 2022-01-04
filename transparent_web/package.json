@@ -4,7 +4,7 @@
   "description": "Show web page with transparent background",
   "main": "main.js",
   "scripts": {
-	"start": "electron ."
+	"dev": "electron ."
   },
   "keywords": [
     "transparent",

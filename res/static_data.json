@@ -1,0 +1,105 @@
+{
+    "items": [
+        {"name":"notes",            "description":"Anteckningar",    "cost":0},
+        {"name":"avgudastaty",      "description":"Avgudastaty",     "cost":0},
+        {"name":"blomma",           "description":"Blomma",          "cost":0},
+        {"name":"ros",              "description":"Ros",             "cost":1},
+        {"name":"citron",           "description":"Citron",          "cost":0},
+        {"name":"devils_root",      "description":"Djävulsrot",      "cost":0},
+        {"name":"skull",            "description":"Dödskalle",       "cost":0},
+        {"name":"featherpen",       "description":"Fjäderpenna",     "cost":0},
+        {"name":"fil",              "description":"Fil",             "cost":0},
+        {"name":"flaska",           "description":"Flaska",          "cost":0},
+        {"name":"flaskpost",        "description":"Flaskpost",       "cost":0},
+        {"name":"forstoringsglas",  "description":"Förstoringsglas", "cost":0},
+        {"name":"icecream",         "description":"Glass",           "cost":0},
+        {"name":"grogg",            "description":"Grogg",           "cost":3},
+        {"name":"gummikyckling",    "description":"Gummikyckling",   "cost":0},
+        {"name":"guvernorsbalte",   "description":"Guvernörsbälte",  "cost":0},
+        {"name":"hatt",             "description":"Hatt",            "cost":0},
+        {"name":"kniv",             "description":"Kniv",            "cost":0},
+        {"name":"kompass",          "description":"Kompass",         "cost":0},
+        {"name":"kors",             "description":"Kors",            "cost":0},
+        {"name":"kulor",            "description":"Kulor",           "cost":0},
+        {"name":"lechuck_sword",    "description":"LC Svärd",        "cost":0},
+        {"name":"map_part1",        "description":"Karta del 1",     "cost":0},
+        {"name":"map_part2",        "description":"Karta del 2",     "cost":0},
+        {"name":"medalj",           "description":"Medalj",          "cost":0},
+        {"name":"meddelande",       "description":"Meddelande",      "cost":1},
+        {"name":"pinnar",           "description":"Pinnar",          "cost":0},
+        {"name":"pistol",           "description":"Pistol",          "cost":0},
+        {"name":"planka",           "description":"Planka",          "cost":0},
+        {"name":"recept",           "description":"Recept",          "cost":0},
+        {"name":"rep",              "description":"Rep (203m)",      "cost":1},
+        {"name":"ritualdolk",       "description":"Ritualdolk",      "cost":0},
+        {"name":"romflaska",        "description":"Romflaska",       "cost":0},
+        {"name":"skattkista",       "description":"Skattkista",      "cost":0},
+        {"name":"skelettben",       "description":"Skelettben",      "cost":0},
+        {"name":"skiffernyckel",    "description":"Skiffernyckel",   "cost":0},
+        {"name":"spade",            "description":"Spade",           "cost":0},
+        {"name":"surstromming",     "description":"Surströmming",    "cost":0},
+        {"name":"tarta",            "description":"Tårta",           "cost":0},
+        {"name":"tshirt",           "description":"T-shirt",         "cost":0},
+        {"name":"varja",            "description":"Värja",           "cost":0},
+        {"name":"ved",              "description":"Ved",             "cost":0}
+    ],
+    "achievements": [
+		{
+            "key": "spirit_guidance", "title": "En röst i mörkret", "desc": "Ta råd från andarna"
+        },
+		{
+            "key": "lechuck_ghost", "title": "Who you gonna call?", "desc": "Besegra spökpiraten LeChuck"
+        },
+		{
+            "key": "lechuck_zombie", "title": "En pistol med en kula", "desc": "Besegra zombie-piraten LeChuck"
+        },
+		{
+            "key": "lechuck_demon", "title": "Pang - kniv i ryggen", "desc": "Besegra demon-piraten LeChuck"
+        },
+		{
+            "key": "lechuck_final", "title": "Kärlekens kraft", "desc": "Besegra LeChuck"
+        },
+		{
+            "key": "flaskpost", "title": "Undrar vem den är till?", "desc": "Hitta en flaskpost",
+            "requirements": [
+                {"item": "flaskpost", "amount": 1}
+            ]
+        },
+		{
+            "key": "devils_root", "title": "Roten till allt ont", "desc": "Använd en riktig djävulsrot till receptet"
+        },
+		{
+            "key": "twoflowers", "title": "Röda och vita rosen", "desc": "Ha två blommor",
+            "requirements": [
+                {"items": ["blomma", "ros"], "amount": 2}
+            ]
+        },
+		{
+            "key": "threeflowers", "title": "Rosornas krig", "desc": "Ha tre blommor",
+            "requirements": [
+                {"items": ["blomma", "ros"], "amount": 3}
+            ]
+        },
+		{
+            "key": "twoswords", "title": "Dual-wield", "desc": "Ha två svärd",
+            "requirements": [
+                {"item": "varja", "amount": 2}
+            ]
+        },
+		{
+            "key": "lechucks_sword", "title": "Svärd och svartkonst", "desc": "Fäktas mot Carla med LeChucks svärd"
+        },
+		{
+            "key": "rip", "title": "R.I.P", "desc": "Ge öns fäktmästare en värdig begravning"
+        },
+		{
+            "key": "sell_to_stan", "title": "Hederlig affärsman", "desc": "Sälj något till Stan"
+        },
+		{
+            "key": "kvitto", "title": "Jag ska bli revisor!", "desc": "Uppvisa kvitto på köp"
+        },
+		{
+            "key": "unknown", "title": "Tekniska problem", "desc": "Vi kan ha hittat en bugg"
+        }
+    ]
+}

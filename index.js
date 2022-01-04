@@ -4,6 +4,7 @@ var httpServer = http.createServer(app);
 var io = require('socket.io')(httpServer);
 
 var model = require('./model')(io);
+model.loadData();
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));

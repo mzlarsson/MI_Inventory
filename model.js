@@ -1,28 +1,22 @@
 
+const fs = require("fs");
+
 module.exports = function(io){
 	
 	var model = {};
 	model.visibility = true;
 	model.money = 3;
+	model.availableItems = [];
 	model.items = [];
-	model.achievementsLeft = [
-		createAchievement("spirit_guidance", "En röst i mörkret", "Ta råd från andarna", () => false),
-		createAchievement("lechuck_ghost", "Who you gonna call?", "Besegra spökpiraten LeChuck", () => false),
-		createAchievement("lechuck_zombie", "En pistol med en kula", "Besegra zombie-piraten LeChuck", () => false),
-		createAchievement("lechuck_demon", "Pang - kniv i ryggen", "Besegra demon-piraten LeChuck", () => false),
-		createAchievement("lechuck_final", "Kärlekens kraft", "Besegra LeChuck", () => false),
-		createAchievement("flaskpost", "Undrar vem den är till?", "Hitta en flaskpost", () => count(model.items, "flaskpost") >= 1),
-		createAchievement("devils_root", "Roten till allt ont", "Använd en riktig djävulsrot till receptet", () => false),
-		createAchievement("twoflowers", "Röda och vita rosen", "Ha två blommor", () => count(model.items, "ros") + count(model.items, "blomma") == 2),
-		createAchievement("threeflowers", "Rosornas krig", "Ha tre blommor", () => count(model.items, "ros") + count(model.items, "blomma") == 3),
-		createAchievement("twoswords", "Dual-wield", "Ha två svärd", () => count(model.items, "varja") == 2),
-		createAchievement("lechucks_sword", "Svärd och svartkonst", "Fäktas mot Carla med LeChucks svärd", () => false),
-		createAchievement("rip", "R.I.P", "Ge öns fäktmästare en värdig begravning", () => false),
-		createAchievement("sell_to_stan", "Hederlig affärsman", "Sälj något till Stan", () => false),
-		createAchievement("kvitto", "Jag ska bli revisor!", "Uppvisa kvitto på köp", () => false),
-		createAchievement("unknown", "Tekniska problem", "Vi kan ha hittat en bugg", () => false)
-	];
+	model.achievementsLeft = [];
 	model.achievementsDone = [];
+
+	model.loadData = function() {
+		const rawStaticData = fs.readFileSync("res/static_data.json");
+		const staticData = JSON.parse(rawStaticData);
+		model.availableItems = staticData.items;
+		model.achievementsLeft = staticData.achievements.map(createAchievement);
+	};
 	
     model.addItem = function(item){
 		console.log('adding item');
@@ -53,10 +47,31 @@ module.exports = function(io){
 	model.checkAchievements = function(){
 		for (let i = 0; i<model.achievementsLeft.length; i++) {
 			let achievement = model.achievementsLeft[i];
-			if (achievement.validator()){
+			if (model.checkAchievement(achievement)){
 				model.requestValidateAchievement(achievement);
 			}
 		}
+	};
+
+	model.checkAchievement = function(achievement) {
+		if (!achievement.requirements) {
+			return false;
+		}
+
+		for (const req of achievement.requirements) {
+			if (req.items && req.amount) {
+				if (req.items.reduce((sum, x) => sum + countItem(x), 0) >= req.amount) {
+					return true;
+				}
+			}
+			else if (req.item && req.amount) {
+				if (countItem(req.item) >= req.amount) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	};
 	
 	model.activateAchievement = function(name){
@@ -72,50 +87,9 @@ module.exports = function(io){
 	};
 
 	model.getAllAvailableItems = function(){
-		return [
-			createItem(0, "notes", "Anteckningar", model.items),
-			createItem(0, "avgudastaty", "Avgudastaty", model.items),
-			createItem(0, "blomma", "Blomma", model.items),
-			createItem(1, "ros", "Ros", model.items),
-			createItem(0, "citron", "Citron", model.items),
-			createItem(0, "devils_root", "Djävulsrot", model.items),
-			createItem(0, "skull", "Dödskalle", model.items),
-			createItem(0, "featherpen", "Fjäderpenna", model.items),
-			createItem(0, "fil", "Fil", model.items),
-			createItem(0, "flaska", "Flaska", model.items),
-			createItem(0, "flaskpost", "Flaskpost", model.items),
-			createItem(0, "forstoringsglas", "Förstoringsglas", model.items),
-			createItem(0, "icecream", "Glass", model.items),
-			createItem(3, "grogg", "Grogg", model.items),
-			createItem(0, "gummikyckling", "Gummikyckling", model.items),
-			createItem(0, "guvernorsbalte", "Guvernörsbälte", model.items),
-			createItem(0, "hatt", "Hatt", model.items),
-			createItem(0, "kniv", "Kniv", model.items),
-			createItem(0, "kompass", "Kompass", model.items),
-			createItem(0, "kors", "Kors", model.items),
-			createItem(0, "kulor", "Kulor", model.items),
-			createItem(0, "lechuck_sword", "LC Svärd", model.items),
-			createItem(0, "map_part1", "Karta del 1", model.items),
-			createItem(0, "map_part2", "Karta del 2", model.items),
-			createItem(0, "medalj", "Medalj", model.items),
-			createItem(1, "meddelande", "Meddelande", model.items),
-			createItem(0, "pinnar", "Pinnar", model.items),
-			createItem(0, "pistol", "Pistol", model.items),
-			createItem(0, "planka", "Planka", model.items),
-			createItem(0, "recept", "Recept", model.items),
-			createItem(1, "rep", "Rep (203m)", model.items),
-			createItem(0, "ritualdolk", "Ritualdolk", model.items),
-			createItem(0, "romflaska", "Romflaska", model.items),
-			createItem(0, "skattkista", "Skattkista", model.items),
-			createItem(0, "skelettben", "Skelettben", model.items),
-			createItem(0, "skiffernyckel", "Skiffernyckel", model.items),
-			createItem(0, "spade", "Spade", model.items),
-			createItem(0, "surstromming", "Surströmming", model.items),
-			createItem(0, "tarta", "Tårta", model.items),
-			createItem(0, "tshirt", "T-shirt", model.items),
-			createItem(0, "varja", "Värja", model.items),
-			createItem(0, "ved", "Ved", model.items)
-		];
+		return this.availableItems.map(x => {
+			return {...x, added: countItem(x.name) > 0};
+		});
 	};
 	
 	model.getAllAvailableAchievements = function(){
@@ -156,23 +130,14 @@ module.exports = function(io){
 		socket.on('activateachievement', model.activateAchievement);
 	});
 	
+
+	function createAchievement(data){
+		return {'name': data.key, 'title': data.title, 'description': data.desc, 'requirements': data.requirements || null};
+	}
+
+	function countItem(element){
+		return model.items.reduce((sum, el) => el == element ? sum+1 : sum, 0);
+	}
+	
 	return model;
 };
-
-function createAchievement(name, title, description, validator){
-	return {'name': name, 'title': title, 'description': description, 'validator': validator};
-}
-
-function createItem(cost, name, description, addedItems){
-	return {'name': name, 'description': description, 'cost': cost, 'added': count(addedItems, name) > 0};
-}
-
-function count(arr, element){
-	let count = 0;
-	let start = 0;
-	while((start = arr.indexOf(element, start)) >= 0){
-		count++;
-		start += 1;
-	}
-	return count;
-}
